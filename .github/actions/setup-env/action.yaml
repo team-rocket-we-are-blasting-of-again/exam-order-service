@@ -8,6 +8,7 @@ runs:
     - name: Setup environment
       shell:
       run: |
+        docker network create orders
         docker-compose -f local.docker-compose.yaml up -d
         sleep 5
 
