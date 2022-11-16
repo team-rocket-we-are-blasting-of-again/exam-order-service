@@ -1,8 +1,11 @@
 package com.teamrocket.Template.entity;
 
+import com.teamrocket.Template.dto.OrderItemDTO;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "order_item")
@@ -29,4 +32,36 @@ public class OrderItem {
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
+
+    public OrderItem(String name, double price, int amount) {
+        this.name = name;
+        this.price = price;
+        this.amount = amount;
+    }
+    public OrderItem(String name, double price, int amount, Order order) {
+        this.order = order;
+        this.name = name;
+        this.price = price;
+        this.amount = amount;
+    }
+
+    public static List<OrderItem> fromList(List<OrderItemDTO> items) {
+        List<OrderItem> orderItems = new ArrayList<>();
+        for (OrderItemDTO item : items
+        ) {
+            orderItems.add(new OrderItem(item.getName(), item.getPrice(), item.getAmount()));
+        }
+        return orderItems;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderItem{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", amount=" + amount +
+                ", order=" + order +
+                '}';
+    }
 }

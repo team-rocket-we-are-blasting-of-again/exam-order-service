@@ -1,5 +1,7 @@
 package com.teamrocket.Template.entity;
 
+import com.teamrocket.Template.dto.OrderDTO;
+import com.teamrocket.Template.dto.OrderItemDTO;
 import lombok.*;
 
 import javax.persistence.*;
@@ -29,6 +31,30 @@ public class Order {
     @Column(name = "status", nullable = false)
     private String status;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> items = new ArrayList<>();
+
+    public static Order fromDto(OrderDTO dto) {
+        Order order = Order.builder()
+                .customerId(dto.getCustomerId())
+                .restaurantId(dto.getRestaurantId())
+                .status(dto.getStatus())
+                .items(OrderItem.fromList(dto.getItems()))
+                .build();
+        for (OrderItem item : order.getItems()) {
+            item.setOrder(order);
+        }
+        return order;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", customerId=" + customerId +
+                ", restaurantId=" + restaurantId +
+                ", status='" + status + '\'' +
+                ", items=" + items +
+                '}';
+    }
 }
