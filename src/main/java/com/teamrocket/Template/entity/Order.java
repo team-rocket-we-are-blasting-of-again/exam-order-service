@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-public class Order {
+public class Order { 
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
