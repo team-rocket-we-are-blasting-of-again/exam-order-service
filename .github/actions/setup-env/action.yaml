@@ -6,6 +6,7 @@ runs:
   steps:
      # Uncomment if you are using a docker compose to setup your environment
     - name: Setup environment
+      shell:
       run: |
         docker-compose -f local.docker-compose.yaml up -d
         sleep 5
