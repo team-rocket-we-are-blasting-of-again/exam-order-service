@@ -18,7 +18,7 @@ import java.util.List;
 public class Order { 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -31,8 +31,15 @@ public class Order {
     @Column(name = "status", nullable = false)
     private String status;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<OrderItem> items = new ArrayList<>();
+
+    public Order(Long customerId, Long restaurantId, String status, List<OrderItem> items) {
+        this.customerId = customerId;
+        this.restaurantId = restaurantId;
+        this.status = status;
+        this.items = items;
+    }
 
     public static Order fromDto(OrderDTO dto) {
         Order order = Order.builder()
@@ -47,14 +54,4 @@ public class Order {
         return order;
     }
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", customerId=" + customerId +
-                ", restaurantId=" + restaurantId +
-                ", status='" + status + '\'' +
-                ", items=" + items +
-                '}';
-    }
 }

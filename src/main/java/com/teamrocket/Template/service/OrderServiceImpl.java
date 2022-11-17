@@ -24,7 +24,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDTO updateOrderStatus(Long orderId, String newStatus) {
-        Order order = orderRepository.getById(orderId);
+        Order order = orderRepository.findById(orderId).orElseThrow();
         order.setStatus(newStatus);
         OrderDTO orderDTO = OrderDTO.fromOrder(order);
         return orderDTO;
@@ -32,7 +32,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDTO getOrderById(Long orderId) {
-        Order order = orderRepository.getById(orderId);
+        Order order = orderRepository.findById(orderId).orElseThrow();
         return OrderDTO.fromOrder(order);
     }
 }

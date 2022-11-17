@@ -6,6 +6,17 @@ import io.cucumber.java.en.When;
 
 import static org.junit.Assert.assertTrue;
 
-public class OrderDef {
-    
+public class TempDef {
+    @Given("a bowling game")
+    public void aBowlingGame() {
+    }
+
+    @When("i roll {int} times and hit {int} each time")
+    public void iRollRollsTimesAndHitAmountEachTime(int rolls, int amount) {
+    }
+
+    @Then("my final score is {int}")
+    public void myFinalScoreIsFinalScore(int finalScore) {
+        assertTrue(true);
+    }
 }
