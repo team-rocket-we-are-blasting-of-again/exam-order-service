@@ -1,7 +1,6 @@
 package com.teamrocket.Template.service;
 
 import com.teamrocket.Template.dto.OrderDTO;
-import com.teamrocket.Template.dto.OrderItemDTO;
 import com.teamrocket.Template.entity.Order;
 import com.teamrocket.Template.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,8 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@RequiredArgsConstructor
 @Transactional
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
