@@ -10,7 +10,7 @@ services:
     networks:
       orders:
   postgres:
-    container_name: postgres
+    container_name: postgres_orders
     image: postgres:latest
     ports:
       - "5432:5432"

@@ -30,6 +30,6 @@ public class OrderHandler implements ExternalTaskHandler {
         OrderDTO orderCreated = orderService.saveOrder(orderToCreate);
         Map<String, Object> allVariables = externalTask.getAllVariables();
         allVariables.put("order", gson.toJson(orderCreated));
-        externalTaskService.complete(externalTask, externalTask.getAllVariables());
+        externalTaskService.complete(externalTask, allVariables);
     }
 }
