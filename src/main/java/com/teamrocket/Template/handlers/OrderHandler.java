@@ -22,10 +22,8 @@ public class OrderHandler implements ExternalTaskHandler {
 
     @Override
     public void execute(ExternalTask externalTask, ExternalTaskService externalTaskService) {
-        System.out.println("createOrder was run!");
         Gson gson = new GsonBuilder().create();
         OrderDTO orderToCreate = gson.fromJson(externalTask.getVariableTyped("order").getValue().toString(), OrderDTO.class);
-        System.out.println("orderToCreate: " + orderToCreate);
         OrderServiceImpl orderService = new OrderServiceImpl(orderRepository);
         OrderDTO orderCreated = orderService.saveOrder(orderToCreate);
         Map<String, Object> allVariables = externalTask.getAllVariables();
