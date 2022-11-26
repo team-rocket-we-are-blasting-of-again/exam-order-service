@@ -3,15 +3,21 @@ package com.teamrocket.Template.dto;
 import com.teamrocket.Template.entity.Order;
 import com.teamrocket.Template.entity.OrderItem;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class OrderItemDTO {
-    private Long id;
+    private int id;
+
+    private int menuItemId;
 
     private String name;
 
@@ -19,7 +25,7 @@ public class OrderItemDTO {
 
     private int amount;
 
-    private Long orderId;
+    private int orderId;
 
     public OrderItemDTO(String name, double price, int amount) {
         this.name = name;
@@ -27,7 +33,15 @@ public class OrderItemDTO {
         this.amount = amount;
     }
 
-    public OrderItemDTO(Long id, String name, double price, int amount) {
+    public OrderItemDTO(int id, String name, double price, int amount, int orderId) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.amount = amount;
+        this.orderId = orderId;
+    }
+
+    public OrderItemDTO(int id, String name, double price, int amount) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -44,43 +58,15 @@ public class OrderItemDTO {
         return orderItems;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
+    public static List<OrderItemDTO> fromNewItems(List<NewOrderItem> items) {
+        List<OrderItemDTO> orderItems = new ArrayList<>();
+        for (NewOrderItem item : items
+             ) {
+            OrderItemDTO dto = new OrderItemDTO();
+            dto.setMenuItemId(item.getMenuItemId());
+            dto.setAmount(item.getQuantity());
+            orderItems.add(dto);
+        }
+        return orderItems;
     }
 }

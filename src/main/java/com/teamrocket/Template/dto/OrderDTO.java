@@ -1,70 +1,61 @@
 package com.teamrocket.Template.dto;
 
 import com.teamrocket.Template.entity.Order;
+import com.teamrocket.Template.enums.OrderStatus;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class OrderDTO {
-    private Long id;
-    private Long customerId;
-    private Long restaurantId;
-    private String status;
+    private int id;
+    private int customerId;
+    private int restaurantId;
+    private OrderStatus status;
     private List<OrderItemDTO> items;
+    private Timestamp createdAt;
+    private Timestamp deliveryTime;
+    private boolean withDelivery;
 
-    public OrderDTO(Long customerId, Long restaurantId, String status, List<OrderItemDTO> items) {
+    public OrderDTO(int customerId, int restaurantId, OrderStatus status, List<OrderItemDTO> items) {
         this.customerId = customerId;
         this.restaurantId = restaurantId;
         this.status = status;
         this.items = items;
+    }
+    public OrderDTO(int id, int customerId, int restaurantId, OrderStatus status, Timestamp createdAt, List<OrderItemDTO> items, boolean withDelivery) {
+        this.id = id;
+        this.customerId = customerId;
+        this.restaurantId = restaurantId;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.items = items;
+        this.withDelivery = withDelivery;
+    }
+
+    public OrderDTO(NewOrderDTO dto) {
+        this.customerId = dto.getCustomerId().intValue();
+        this.restaurantId = dto.getRestaurantId().intValue();
+        this.status = OrderStatus.PENDING;
+        this.withDelivery = dto.isWithDelivery();
+        this.items = OrderItemDTO.fromNewItems(dto.getItems());
     }
 
     public static OrderDTO fromOrder(Order order) {
         return new OrderDTO(order.getId(),
-                order.getCustomerId(), order.getRestaurantId(),
-                order.getStatus(), OrderItemDTO.fromList(order.getItems()));
+                order.getCustomerId(),
+                order.getRestaurantId(),
+                order.getStatus(),
+                order.getCreatedAt(),
+                OrderItemDTO.fromList(order.getItems()),
+                order.isWithDelivery());
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
-    }
-
-    public Long getRestaurantId() {
-        return restaurantId;
-    }
-
-    public void setRestaurantId(Long restaurantId) {
-        this.restaurantId = restaurantId;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public List<OrderItemDTO> getItems() {
-        return items;
-    }
-
-    public void setItems(List<OrderItemDTO> items) {
-        this.items = items;
-    }
 }

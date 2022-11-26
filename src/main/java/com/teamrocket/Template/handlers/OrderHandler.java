@@ -2,6 +2,7 @@ package com.teamrocket.Template.handlers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.teamrocket.Template.dto.NewOrderDTO;
 import com.teamrocket.Template.dto.OrderDTO;
 import com.teamrocket.Template.repository.OrderRepository;
 import com.teamrocket.Template.service.OrderServiceImpl;
@@ -22,10 +23,11 @@ public class OrderHandler implements ExternalTaskHandler {
 
     @Override
     public void execute(ExternalTask externalTask, ExternalTaskService externalTaskService) {
+        // TODO: Make sure to update with new model
         Gson gson = new GsonBuilder().create();
-        OrderDTO orderToCreate = gson.fromJson(externalTask.getVariableTyped("order").getValue().toString(), OrderDTO.class);
+        NewOrderDTO orderToCreate = gson.fromJson(externalTask.getVariableTyped("order").getValue().toString(), NewOrderDTO.class);
         OrderServiceImpl orderService = new OrderServiceImpl(orderRepository);
-        OrderDTO orderCreated = orderService.saveOrder(orderToCreate);
+        OrderDTO orderCreated = orderService.saveOrder(new OrderDTO(orderToCreate));
         Map<String, Object> allVariables = externalTask.getAllVariables();
         allVariables.put("order", gson.toJson(orderCreated));
         externalTaskService.complete(externalTask, allVariables);

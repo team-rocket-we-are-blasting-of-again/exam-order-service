@@ -3,6 +3,7 @@ package com.teamrocket.Template.integration.service;
 import com.teamrocket.Template.dto.OrderDTO;
 import com.teamrocket.Template.dto.OrderItemDTO;
 import com.teamrocket.Template.entity.Order;
+import com.teamrocket.Template.enums.OrderStatus;
 import com.teamrocket.Template.repository.OrderRepository;
 import com.teamrocket.Template.service.OrderService;
 import com.teamrocket.Template.service.OrderServiceImpl;
@@ -36,7 +37,7 @@ public class OrderServiceIT {
     void shouldSaveOrderInDB(){
         List<OrderItemDTO> orderItems = new ArrayList<>();
         orderItems.add(new OrderItemDTO("itemName2", 12.0, 2));
-        OrderDTO order = new OrderDTO(2L, 3L, "status", orderItems);
+        OrderDTO order = new OrderDTO(2, 3, OrderStatus.READY, orderItems);
         OrderDTO result = orderService.saveOrder(order);
         assertNotNull(result);
     }
@@ -45,11 +46,11 @@ public class OrderServiceIT {
      void shouldUpdateOrderStatus(){
         List<OrderItemDTO> orderItems = new ArrayList<>();
         orderItems.add(new OrderItemDTO("itemName", 10.0, 1));
-        OrderDTO order = new OrderDTO(1L, 2L, "status", orderItems);
+        OrderDTO order = new OrderDTO(1, 2, OrderStatus.CANCELED, orderItems);
         Order savedOrder = orderRepository.save(Order.fromDto(order));
-        Long id = savedOrder.getId();
-        String status = "Changed status";
-        OrderDTO result = orderService.updateOrderStatus(id, status);
+        int id = savedOrder.getId();
+        OrderStatus status = OrderStatus.CANCELED;
+        OrderDTO result = orderService.updateOrderStatus(id, OrderStatus.CANCELED);
         assertEquals(status, result.getStatus());
     }
 
@@ -57,7 +58,7 @@ public class OrderServiceIT {
     void shouldGetOrderById(){
         List<OrderItemDTO> orderItems = new ArrayList<>();
         orderItems.add(new OrderItemDTO("itemName", 10.0, 1));
-        OrderDTO order = new OrderDTO(1L, 2L, "status", orderItems);
+        OrderDTO order = new OrderDTO(1, 2, OrderStatus.CANCELED, orderItems);
         Order savedOrder = orderRepository.save(Order.fromDto(order));
         OrderDTO result = orderService.getOrderById(savedOrder.getId());
         assertEquals(order.getCustomerId(), result.getCustomerId());

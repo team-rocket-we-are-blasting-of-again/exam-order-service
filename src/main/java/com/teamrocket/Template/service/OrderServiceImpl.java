@@ -2,6 +2,7 @@ package com.teamrocket.Template.service;
 
 import com.teamrocket.Template.dto.OrderDTO;
 import com.teamrocket.Template.entity.Order;
+import com.teamrocket.Template.enums.OrderStatus;
 import com.teamrocket.Template.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDTO updateOrderStatus(Long orderId, String newStatus) {
+    public OrderDTO updateOrderStatus(int orderId, OrderStatus newStatus) {
         Order order = orderRepository.findById(orderId).orElseThrow();
         order.setStatus(newStatus);
         OrderDTO orderDTO = OrderDTO.fromOrder(order);
@@ -30,7 +31,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDTO getOrderById(Long orderId) {
+    public OrderDTO getOrderById(int orderId) {
         Order order = orderRepository.findById(orderId).orElseThrow();
         return OrderDTO.fromOrder(order);
     }

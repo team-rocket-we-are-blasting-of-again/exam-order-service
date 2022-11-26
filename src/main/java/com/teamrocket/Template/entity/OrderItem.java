@@ -18,15 +18,18 @@ public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private int id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "menuItemId")
+    private int menuItemId;
+
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "price", nullable = false)
+    @Column(name = "price")
     private double price;
 
-    @Column(name = "amount", nullable = false)
+    @Column(name = "amount")
     private int amount;
 
     @ManyToOne

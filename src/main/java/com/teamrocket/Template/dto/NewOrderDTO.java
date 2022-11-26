@@ -14,8 +14,9 @@ import java.util.List;
 @Getter
 @Setter
 public class NewOrderDTO {
+    private Long customerId;
     private Long restaurantId;
     private Date dateCreated;
     private boolean withDelivery;
-    private List<OrderItem> items;
+    private List<NewOrderItem> items;
 }

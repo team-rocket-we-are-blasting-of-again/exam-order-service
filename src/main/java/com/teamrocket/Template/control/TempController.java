@@ -18,20 +18,20 @@ public class TempController {
     private final OrderServiceImpl orderService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<OrderDTO> getOrderById(@PathVariable Long id) {
+    public ResponseEntity<OrderDTO> getOrderById(@PathVariable int id) {
         OrderDTO dto = orderService.getOrderById(id);
         return ResponseEntity.status(201).body(dto);
     }
 
-    @PostMapping
+    /*@PostMapping
     public ResponseEntity<OrderDTO> addOrder(@RequestBody OrderDTO orderDTO) {
         OrderDTO dto = orderService.saveOrder(orderDTO);
         return ResponseEntity.status(201).body(dto);
-    }
+    }*/
 
-    @PutMapping("/{id}")
+    /*@PutMapping("/{id}")
     public ResponseEntity<OrderDTO> updateOrderStatus(@RequestBody OrderStatusDTO status, @PathVariable Long id) {
         OrderDTO dto = orderService.updateOrderStatus(id, status.getStatus());
         return ResponseEntity.status(201).body(dto);
-    }
+    }*/
 }
