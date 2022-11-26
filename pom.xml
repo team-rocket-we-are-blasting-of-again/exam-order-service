@@ -265,7 +265,7 @@
                             <includes>
                                 <include>**/*</include>
                             </includes>
-                            <!--   <groups>com.teamrocket.Template.integration</groups> -->
+                            <!--   <groups>com.teamrocket.orderservicevice.integration</groups> -->
                         </configuration>
                         <executions>
                             <execution>
