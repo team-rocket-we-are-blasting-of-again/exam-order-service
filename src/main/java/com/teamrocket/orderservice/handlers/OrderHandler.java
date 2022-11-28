@@ -30,16 +30,8 @@ public class OrderHandler implements ExternalTaskHandler {
         log.info("Create order topic fired");
         Gson gson = new GsonBuilder().create();
         NewOrderDTO orderToCreate = gson.fromJson(externalTask.getVariableTyped("order").getValue().toString(), NewOrderDTO.class);
-        for (NewOrderItem item : orderToCreate.getItems()
-                ) {
-            System.out.println(item.getMenuItemId());
-        }
         OrderServiceImpl orderService = new OrderServiceImpl(orderRepository);
         OrderDTO orderCreated = orderService.saveOrder(new OrderDTO(orderToCreate));
-        for (OrderItemDTO item : orderCreated.getItems()
-        ) {
-            System.out.println(item.getMenuItemId());
-        }
         Map<String, Object> allVariables = externalTask.getAllVariables();
         allVariables.put("order", gson.toJson(orderCreated));
         externalTaskService.complete(externalTask, allVariables);
