@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.annotation.KafkaHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -50,6 +51,7 @@ public class KafkaServiceImpl implements KafkaService {
 
     @Override
     @KafkaListener(topics = "ORDER_CANCELED", groupId = "order-status")
+    @KafkaHandler
     public void orderCancelled(int id) {
         OrderDTO result = orderService.updateOrderStatus(id, OrderStatus.CANCELED);
         log.info("Order " + result.getId() + " changed status: CANCELLED");
