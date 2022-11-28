@@ -51,7 +51,10 @@ public class Order {
     @Column(name = "courierId")
     private int courierId;
 
-    public Order(int id, int customerId, int restaurantId, Timestamp createdAt, OrderStatus status, List<OrderItem> items, double orderPrice, double deliveryPrice, boolean withDelivery, int courierId) {
+    @Column(name = "processId")
+    private String processId;
+
+    public Order(int id, int customerId, int restaurantId, Timestamp createdAt, OrderStatus status, List<OrderItem> items, double orderPrice, double deliveryPrice, boolean withDelivery, int courierId, String processId) {
         this.id = id;
         this.customerId = customerId;
         this.restaurantId = restaurantId;
@@ -62,6 +65,7 @@ public class Order {
         this.deliveryPrice = deliveryPrice;
         this.withDelivery = withDelivery;
         this.courierId = courierId;
+        this.processId = processId;
     }
 
     public static Order fromDto(OrderDTO dto) {
@@ -71,6 +75,7 @@ public class Order {
                 .status(dto.getStatus())
                 .withDelivery(dto.isWithDelivery())
                 .items(OrderItem.fromList(dto.getItems()))
+                .processId(dto.getProcessId())
                 .build();
         for (OrderItem item : order.getItems()) {
             item.setOrder(order);
