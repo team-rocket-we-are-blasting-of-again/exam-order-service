@@ -32,14 +32,6 @@ public class OrderItemDTO {
         this.amount = amount;
     }
 
-    public OrderItemDTO(int id, String name, double price, int amount, int orderId) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.amount = amount;
-        this.orderId = orderId;
-    }
-
     public OrderItemDTO(int id, String name, double price, int amount) {
         this.id = id;
         this.name = name;
@@ -51,6 +43,7 @@ public class OrderItemDTO {
         for (OrderItem item : items
              ) {
             orderItems.add(new OrderItemDTO(item.getId(),
+                    item.getMenuItemId(),
                     item.getName(), item.getPrice(),
                     item.getAmount(), item.getOrder().getId()));
         }
@@ -65,6 +58,7 @@ public class OrderItemDTO {
             dto.setMenuItemId(item.getMenuItemId());
             dto.setAmount(item.getQuantity());
             orderItems.add(dto);
+            System.out.println("item: " + dto.getMenuItemId());
         }
         return orderItems;
     }

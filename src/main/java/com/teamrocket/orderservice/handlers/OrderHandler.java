@@ -3,7 +3,9 @@ package com.teamrocket.orderservice.handlers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.teamrocket.orderservice.dto.NewOrderDTO;
+import com.teamrocket.orderservice.dto.NewOrderItem;
 import com.teamrocket.orderservice.dto.OrderDTO;
+import com.teamrocket.orderservice.dto.OrderItemDTO;
 import com.teamrocket.orderservice.repository.OrderRepository;
 import com.teamrocket.orderservice.service.OrderServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -28,8 +30,16 @@ public class OrderHandler implements ExternalTaskHandler {
         log.info("Create order topic fired");
         Gson gson = new GsonBuilder().create();
         NewOrderDTO orderToCreate = gson.fromJson(externalTask.getVariableTyped("order").getValue().toString(), NewOrderDTO.class);
+        for (NewOrderItem item : orderToCreate.getItems()
+                ) {
+            System.out.println(item.getMenuItemId());
+        }
         OrderServiceImpl orderService = new OrderServiceImpl(orderRepository);
         OrderDTO orderCreated = orderService.saveOrder(new OrderDTO(orderToCreate));
+        for (OrderItemDTO item : orderCreated.getItems()
+        ) {
+            System.out.println(item.getMenuItemId());
+        }
         Map<String, Object> allVariables = externalTask.getAllVariables();
         allVariables.put("order", gson.toJson(orderCreated));
         externalTaskService.complete(externalTask, allVariables);
