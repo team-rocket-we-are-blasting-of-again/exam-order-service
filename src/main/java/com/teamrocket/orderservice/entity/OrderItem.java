@@ -52,7 +52,9 @@ public class OrderItem {
         List<OrderItem> orderItems = new ArrayList<>();
         for (OrderItemDTO item : items
         ) {
-            orderItems.add(new OrderItem(item.getName(), item.getPrice(), item.getAmount()));
+            OrderItem orderItem = new OrderItem(item.getName(), item.getPrice(), item.getAmount());
+            orderItem.setMenuItemId(item.getMenuItemId());
+            orderItems.add(orderItem);
         }
         return orderItems;
     }
