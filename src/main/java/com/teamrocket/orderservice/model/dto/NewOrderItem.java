@@ -1,4 +1,4 @@
-package com.teamrocket.orderservice.model;
+package com.teamrocket.orderservice.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class OrderStatusDTO {
-    private String status;
+public class NewOrderItem {
+    private int menuItemId;
+    private int quantity;
 }

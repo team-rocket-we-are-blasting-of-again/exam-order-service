@@ -1,8 +1,8 @@
 package com.teamrocket.orderservice.integration.service;
 
-import com.teamrocket.orderservice.model.OrderDTO;
-import com.teamrocket.orderservice.model.OrderItemDTO;
-import com.teamrocket.orderservice.entity.Order;
+import com.teamrocket.orderservice.model.dto.OrderDTO;
+import com.teamrocket.orderservice.model.dto.OrderItemDTO;
+import com.teamrocket.orderservice.model.entity.Order;
 import com.teamrocket.orderservice.enums.OrderStatus;
 import com.teamrocket.orderservice.repository.OrderRepository;
 import com.teamrocket.orderservice.service.OrderService;

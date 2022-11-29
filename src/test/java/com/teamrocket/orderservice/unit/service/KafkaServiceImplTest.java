@@ -3,12 +3,11 @@ package com.teamrocket.orderservice.unit.service;
 import com.teamrocket.orderservice.application.KafkaService;
 import com.teamrocket.orderservice.application.KafkaServiceImpl;
 import com.teamrocket.orderservice.enums.OrderStatus;
-import com.teamrocket.orderservice.model.NewOrderItem;
-import com.teamrocket.orderservice.model.OrderCancelled;
-import com.teamrocket.orderservice.model.OrderDTO;
-import com.teamrocket.orderservice.model.RestaurantOrder;
+import com.teamrocket.orderservice.model.dto.NewOrderItem;
+import com.teamrocket.orderservice.model.dto.OrderCancelled;
+import com.teamrocket.orderservice.model.dto.OrderDTO;
+import com.teamrocket.orderservice.model.dto.RestaurantOrder;
 import com.teamrocket.orderservice.service.OrderService;
-import kafka.log.LogTestUtils;
 import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 import org.springframework.web.client.RestTemplate;
@@ -17,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

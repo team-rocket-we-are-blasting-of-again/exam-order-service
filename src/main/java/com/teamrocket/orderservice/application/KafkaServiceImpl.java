@@ -1,13 +1,12 @@
 package com.teamrocket.orderservice.application;
 
-import com.teamrocket.orderservice.model.OrderCancelled;
-import com.teamrocket.orderservice.model.OrderDTO;
+import com.teamrocket.orderservice.model.dto.OrderCancelled;
+import com.teamrocket.orderservice.model.dto.OrderDTO;
 import com.teamrocket.orderservice.enums.OrderStatus;
-import com.teamrocket.orderservice.model.RestaurantOrder;
+import com.teamrocket.orderservice.model.dto.RestaurantOrder;
 import com.teamrocket.orderservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaHandler;
 import org.springframework.kafka.annotation.KafkaListener;

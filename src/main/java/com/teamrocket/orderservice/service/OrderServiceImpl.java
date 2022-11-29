@@ -1,7 +1,7 @@
 package com.teamrocket.orderservice.service;
 
-import com.teamrocket.orderservice.model.OrderDTO;
-import com.teamrocket.orderservice.entity.Order;
+import com.teamrocket.orderservice.model.dto.OrderDTO;
+import com.teamrocket.orderservice.model.entity.Order;
 import com.teamrocket.orderservice.enums.OrderStatus;
 import com.teamrocket.orderservice.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDTO saveOrder(OrderDTO dto) {
-        Order order = orderRepository.save(Order.fromDto(dto));
+        Order toSave = Order.fromDto(dto);
+        Order order = orderRepository.save(toSave);
         OrderDTO orderDTO = OrderDTO.fromOrder(order);
         return orderDTO;
     }

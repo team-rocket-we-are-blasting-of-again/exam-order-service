@@ -1,7 +1,7 @@
 package com.teamrocket.orderservice.config;
 
-import com.teamrocket.orderservice.model.OrderCancelled;
-import com.teamrocket.orderservice.model.RestaurantOrder;
+import com.teamrocket.orderservice.model.dto.OrderCancelled;
+import com.teamrocket.orderservice.model.dto.RestaurantOrder;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;

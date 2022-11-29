@@ -1,6 +1,6 @@
-package com.teamrocket.orderservice.model;
+package com.teamrocket.orderservice.model.dto;
 
-import com.teamrocket.orderservice.entity.Order;
+import com.teamrocket.orderservice.model.entity.Order;
 import com.teamrocket.orderservice.enums.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

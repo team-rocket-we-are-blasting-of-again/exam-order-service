@@ -2,8 +2,8 @@ package com.teamrocket.orderservice.handlers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.teamrocket.orderservice.model.NewOrderDTO;
-import com.teamrocket.orderservice.model.OrderDTO;
+import com.teamrocket.orderservice.model.dto.NewOrderDTO;
+import com.teamrocket.orderservice.model.dto.OrderDTO;
 import com.teamrocket.orderservice.repository.OrderRepository;
 import com.teamrocket.orderservice.service.OrderServiceImpl;
 import lombok.extern.slf4j.Slf4j;

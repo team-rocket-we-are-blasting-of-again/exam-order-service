@@ -1,7 +1,7 @@
 package com.teamrocket.orderservice.application;
 
-import com.teamrocket.orderservice.model.OrderCancelled;
-import com.teamrocket.orderservice.model.RestaurantOrder;
+import com.teamrocket.orderservice.model.dto.OrderCancelled;
+import com.teamrocket.orderservice.model.dto.RestaurantOrder;
 
 public interface KafkaService {
     void orderCancelled(OrderCancelled orderCancelled);
