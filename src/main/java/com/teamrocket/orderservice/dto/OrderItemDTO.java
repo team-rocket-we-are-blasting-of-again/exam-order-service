@@ -58,7 +58,6 @@ public class OrderItemDTO {
             dto.setMenuItemId(item.getMenuItemId());
             dto.setAmount(item.getQuantity());
             orderItems.add(dto);
-            System.out.println("item: " + dto.getMenuItemId());
         }
         return orderItems;
     }
