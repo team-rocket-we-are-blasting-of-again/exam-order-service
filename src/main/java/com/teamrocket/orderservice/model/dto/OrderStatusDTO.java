@@ -1,4 +1,4 @@
-package com.teamrocket.orderservice.dto;
+package com.teamrocket.orderservice.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

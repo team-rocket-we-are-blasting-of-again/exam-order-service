@@ -9,7 +9,7 @@ runs:
       shell:
       run: |
         docker network create orders
-        docker-compose -f local.docker-compose.yaml up -d
+        docker-compose up -d
         sleep 5
 
     - name: Set up JDK 17

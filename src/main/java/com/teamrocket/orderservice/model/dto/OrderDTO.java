@@ -1,6 +1,6 @@
-package com.teamrocket.orderservice.dto;
+package com.teamrocket.orderservice.model.dto;
 
-import com.teamrocket.orderservice.entity.Order;
+import com.teamrocket.orderservice.model.entity.Order;
 import com.teamrocket.orderservice.enums.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,6 +23,7 @@ public class OrderDTO {
     private Timestamp createdAt;
     private Timestamp deliveryTime;
     private boolean withDelivery;
+    private String processId;
 
     public OrderDTO(int customerId, int restaurantId, OrderStatus status, List<OrderItemDTO> items) {
         this.customerId = customerId;
@@ -30,7 +31,7 @@ public class OrderDTO {
         this.status = status;
         this.items = items;
     }
-    public OrderDTO(int id, int customerId, int restaurantId, OrderStatus status, Timestamp createdAt, List<OrderItemDTO> items, boolean withDelivery) {
+    public OrderDTO(int id, int customerId, int restaurantId, OrderStatus status, Timestamp createdAt, List<OrderItemDTO> items, boolean withDelivery, String processId) {
         this.id = id;
         this.customerId = customerId;
         this.restaurantId = restaurantId;
@@ -38,6 +39,7 @@ public class OrderDTO {
         this.createdAt = createdAt;
         this.items = items;
         this.withDelivery = withDelivery;
+        this.processId = processId;
     }
 
     public OrderDTO(NewOrderDTO dto) {
@@ -55,7 +57,8 @@ public class OrderDTO {
                 order.getStatus(),
                 order.getCreatedAt(),
                 OrderItemDTO.fromList(order.getItems()),
-                order.isWithDelivery());
+                order.isWithDelivery(),
+        order.getProcessId());
     }
 
 }

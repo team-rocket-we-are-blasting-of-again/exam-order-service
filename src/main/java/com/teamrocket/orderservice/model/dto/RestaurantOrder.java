@@ -1,5 +1,6 @@
-package com.teamrocket.orderservice.dto;
+package com.teamrocket.orderservice.model.dto;
 
+import com.teamrocket.orderservice.enums.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,10 +13,13 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class NewOrderDTO {
-    private Long customerId;
-    private Long restaurantId;
-    private Date dateCreated;
+public class RestaurantOrder {
+    private int id;
+    private int restaurantId;
+    private Date createdAt;
+    private OrderStatus status;
     private boolean withDelivery;
+    private double totalPrice;
     private List<NewOrderItem> items;
+
 }

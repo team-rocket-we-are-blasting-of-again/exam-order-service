@@ -1,6 +1,6 @@
-package com.teamrocket.orderservice.entity;
+package com.teamrocket.orderservice.model.entity;
 
-import com.teamrocket.orderservice.dto.OrderItemDTO;
+import com.teamrocket.orderservice.model.dto.OrderItemDTO;
 import lombok.*;
 
 import javax.persistence.*;
