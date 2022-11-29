@@ -1,7 +1,7 @@
 package com.teamrocket.orderservice.unit.service;
 
-import com.teamrocket.orderservice.dto.OrderDTO;
-import com.teamrocket.orderservice.dto.OrderItemDTO;
+import com.teamrocket.orderservice.model.OrderDTO;
+import com.teamrocket.orderservice.model.OrderItemDTO;
 import com.teamrocket.orderservice.entity.Order;
 import com.teamrocket.orderservice.enums.OrderStatus;
 import com.teamrocket.orderservice.repository.OrderRepository;
@@ -31,18 +31,18 @@ class OrderServiceImplTest {
         orderService = new OrderServiceImpl(repositoryMock);
     }
 
-    /*@Test
+    @Test
     void saveOrder() {
         List<OrderItemDTO> orderItems = new ArrayList<>();
         orderItems.add(new OrderItemDTO("itemName", 10.0, 1));
-        OrderDTO order = new OrderDTO(1L, 2L, "status", orderItems);
+        OrderDTO order = new OrderDTO(1, 2, OrderStatus.PENDING, orderItems);
         Mockito.when(repositoryMock.save(any())).thenReturn(Order.fromDto(order));
 
         OrderDTO retOrder = orderService.saveOrder(order);
         assertNotNull(retOrder);
         Mockito.verify(repositoryMock).save(any());
         Mockito.verifyNoMoreInteractions(repositoryMock);
-    }*/
+    }
 
     @Test
     void updateOrderStatus() {

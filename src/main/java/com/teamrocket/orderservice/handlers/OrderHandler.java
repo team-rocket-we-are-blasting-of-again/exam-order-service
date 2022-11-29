@@ -2,8 +2,8 @@ package com.teamrocket.orderservice.handlers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.teamrocket.orderservice.dto.NewOrderDTO;
-import com.teamrocket.orderservice.dto.OrderDTO;
+import com.teamrocket.orderservice.model.NewOrderDTO;
+import com.teamrocket.orderservice.model.OrderDTO;
 import com.teamrocket.orderservice.repository.OrderRepository;
 import com.teamrocket.orderservice.service.OrderServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -12,12 +12,7 @@ import org.camunda.bpm.client.task.ExternalTask;
 import org.camunda.bpm.client.task.ExternalTaskHandler;
 import org.camunda.bpm.client.task.ExternalTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
 

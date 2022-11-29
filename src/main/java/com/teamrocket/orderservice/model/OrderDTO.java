@@ -1,4 +1,4 @@
-package com.teamrocket.orderservice.dto;
+package com.teamrocket.orderservice.model;
 
 import com.teamrocket.orderservice.entity.Order;
 import com.teamrocket.orderservice.enums.OrderStatus;
