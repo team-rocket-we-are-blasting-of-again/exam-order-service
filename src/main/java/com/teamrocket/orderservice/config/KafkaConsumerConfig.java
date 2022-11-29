@@ -52,8 +52,6 @@ public class KafkaConsumerConfig {
         Map<String, Class<?>> mappings = new HashMap<>();
         mappings.put("orderCancelled", OrderCancelled.class);
         mappings.put("order", RestaurantOrder.class);
- /*       mappings.put("customerNotification", CustomerNotification.class);
-        mappings.put("newCustomerEventDTO", NewCustomerEventDTO.class);*/
         typeMapper.setIdClassMapping(mappings);
         converter.setTypeMapper(typeMapper);
         return converter;

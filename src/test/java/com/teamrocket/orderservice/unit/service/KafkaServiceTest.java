@@ -1,7 +1,6 @@
 package com.teamrocket.orderservice.unit.service;
 
 import com.teamrocket.orderservice.application.KafkaService;
-import com.teamrocket.orderservice.application.KafkaServiceImpl;
 import com.teamrocket.orderservice.enums.OrderStatus;
 import com.teamrocket.orderservice.model.dto.NewOrderItem;
 import com.teamrocket.orderservice.model.dto.OrderCancelled;
@@ -20,7 +19,7 @@ import static org.mockito.Mockito.mock;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Tag("unit")
-class KafkaServiceImplTest {
+class KafkaServiceTest {
 
     private KafkaService kafkaService;
     private OrderService orderServiceMock;
@@ -30,7 +29,7 @@ class KafkaServiceImplTest {
     void setUp() {
         orderServiceMock = mock(OrderService.class);
         restTemplateMock = mock(RestTemplate.class);
-        kafkaService = new KafkaServiceImpl(orderServiceMock);
+        kafkaService = new KafkaService(orderServiceMock);
     }
 
     @AfterEach
