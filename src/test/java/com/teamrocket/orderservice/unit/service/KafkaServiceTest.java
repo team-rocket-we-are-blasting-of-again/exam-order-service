@@ -2,10 +2,7 @@ package com.teamrocket.orderservice.unit.service;
 
 import com.teamrocket.orderservice.application.KafkaService;
 import com.teamrocket.orderservice.enums.OrderStatus;
-import com.teamrocket.orderservice.model.dto.NewOrderItem;
-import com.teamrocket.orderservice.model.dto.OrderCancelled;
-import com.teamrocket.orderservice.model.dto.OrderDTO;
-import com.teamrocket.orderservice.model.dto.RestaurantOrder;
+import com.teamrocket.orderservice.model.dto.*;
 import com.teamrocket.orderservice.service.OrderService;
 import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
@@ -40,37 +37,28 @@ class KafkaServiceTest {
 
     @Test
     void shouldChangeStatusToIN_PROGRESS() {
-        List<NewOrderItem> items = new ArrayList<>();
-        items.add(new NewOrderItem(1, 2));
-        RestaurantOrder order = new RestaurantOrder(1, 1, new Date(),
-                OrderStatus.PENDING, true, 10.0, items);
+        OrderIdDTO idDTO = new OrderIdDTO(1);
 
-        kafkaService.orderAccepted(order);
-        Mockito.verify(orderServiceMock).updateOrderStatus(order.getId(), OrderStatus.IN_PROGRESS);
+        kafkaService.orderAccepted(idDTO);
+        Mockito.verify(orderServiceMock).updateOrderStatus(idDTO.getSystemOrderId(), OrderStatus.IN_PROGRESS);
         Mockito.verifyNoMoreInteractions(orderServiceMock);
     }
 
     @Test
     void shouldChangeStatusToREADY() {
-        List<NewOrderItem> items = new ArrayList<>();
-        items.add(new NewOrderItem(1, 2));
-        RestaurantOrder order = new RestaurantOrder(1, 1, new Date(),
-                OrderStatus.PENDING, true, 10.0, items);
+        OrderIdDTO idDTO = new OrderIdDTO(1);
 
-        kafkaService.orderReady(order);
-        Mockito.verify(orderServiceMock).updateOrderStatus(order.getId(), OrderStatus.READY);
+        kafkaService.orderReady(idDTO);
+        Mockito.verify(orderServiceMock).updateOrderStatus(idDTO.getSystemOrderId(), OrderStatus.READY);
         Mockito.verifyNoMoreInteractions(orderServiceMock);
     }
 
     @Test
     void shouldChangeStatusToPICKED_UP() {
-        List<NewOrderItem> items = new ArrayList<>();
-        items.add(new NewOrderItem(1, 2));
-        RestaurantOrder order = new RestaurantOrder(1, 1, new Date(),
-                OrderStatus.PENDING, true, 10.0, items);
+        OrderIdDTO idDTO = new OrderIdDTO(1);
 
-        kafkaService.orderPickedUp(order);
-        Mockito.verify(orderServiceMock).updateOrderStatus(order.getId(), OrderStatus.PICKED_UP);
+        kafkaService.orderPickedUp(idDTO);
+        Mockito.verify(orderServiceMock).updateOrderStatus(idDTO.getSystemOrderId(), OrderStatus.PICKED_UP);
         Mockito.verifyNoMoreInteractions(orderServiceMock);
     }
 

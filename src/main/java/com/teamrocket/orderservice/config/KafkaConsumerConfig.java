@@ -1,7 +1,7 @@
 package com.teamrocket.orderservice.config;
 
 import com.teamrocket.orderservice.model.dto.OrderCancelled;
-import com.teamrocket.orderservice.model.dto.RestaurantOrder;
+import com.teamrocket.orderservice.model.dto.OrderIdDTO;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -51,7 +51,7 @@ public class KafkaConsumerConfig {
         typeMapper.addTrustedPackages("com.baeldung.spring.kafka");
         Map<String, Class<?>> mappings = new HashMap<>();
         mappings.put("orderCancelled", OrderCancelled.class);
-        mappings.put("order", RestaurantOrder.class);
+        mappings.put("order", OrderIdDTO.class);
         typeMapper.setIdClassMapping(mappings);
         converter.setTypeMapper(typeMapper);
         return converter;
