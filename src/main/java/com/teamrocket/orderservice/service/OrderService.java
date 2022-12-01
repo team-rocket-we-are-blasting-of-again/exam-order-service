@@ -4,7 +4,7 @@ import com.teamrocket.orderservice.model.dto.OrderDTO;
 import com.teamrocket.orderservice.enums.OrderStatus;
 
 public interface OrderService {
-    public OrderDTO saveOrder(OrderDTO dto);
-    public OrderDTO updateOrderStatus(int orderId, OrderStatus newStatus);
-    public OrderDTO getOrderById(int orderId);
+    OrderDTO saveOrder(OrderDTO dto);
+    OrderDTO updateOrderStatus(int orderId, OrderStatus newStatus);
+    OrderDTO getOrderById(int orderId);
 }
