@@ -2,11 +2,11 @@ package com.teamrocket.orderservice.application.handlers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.teamrocket.orderservice.application.KafkaService;
-import com.teamrocket.orderservice.model.dto.NewOrder;
+import com.teamrocket.orderservice.application.KafkaListener;
 import com.teamrocket.orderservice.model.dto.NewOrderDTO;
 import com.teamrocket.orderservice.model.dto.OrderDTO;
 import com.teamrocket.orderservice.repository.OrderRepository;
+import com.teamrocket.orderservice.service.KafkaService;
 import com.teamrocket.orderservice.service.OrderServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.client.spring.annotation.ExternalTaskSubscription;
@@ -14,7 +14,6 @@ import org.camunda.bpm.client.task.ExternalTask;
 import org.camunda.bpm.client.task.ExternalTaskHandler;
 import org.camunda.bpm.client.task.ExternalTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;

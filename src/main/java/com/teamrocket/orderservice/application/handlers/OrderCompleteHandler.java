@@ -1,11 +1,8 @@
 package com.teamrocket.orderservice.application.handlers;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.teamrocket.orderservice.application.KafkaService;
-import com.teamrocket.orderservice.model.dto.OrderDTO;
+import com.teamrocket.orderservice.application.KafkaListener;
 import com.teamrocket.orderservice.model.entity.CamundaOrderTask;
-import com.teamrocket.orderservice.repository.TaskRepository;
 import com.teamrocket.orderservice.service.TaskService;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.client.spring.annotation.ExternalTaskSubscription;
@@ -24,7 +21,7 @@ public class OrderCompleteHandler implements ExternalTaskHandler {
     TaskService taskService;
 
     @Autowired
-    KafkaService kafkaService;
+    KafkaListener kafkaListener;
 
     @Autowired
     Gson gson;

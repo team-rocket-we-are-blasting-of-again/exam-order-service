@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.teamrocket.orderservice.model.dto.*;
 import com.teamrocket.orderservice.enums.OrderStatus;
 import com.teamrocket.orderservice.model.entity.CamundaOrderTask;
-import com.teamrocket.orderservice.repository.TaskRepository;
 import com.teamrocket.orderservice.service.OrderService;
 import com.teamrocket.orderservice.service.TaskService;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.kafka.annotation.KafkaHandler;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
@@ -24,12 +22,11 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class KafkaService {
+public class KafkaListener {
     @Value("${camunda.server.engine}")
     private String restEngine;
 
@@ -49,7 +46,7 @@ public class KafkaService {
     @Autowired
     private Gson GSON;
 
-    public KafkaService(OrderService orderService) {
+    public KafkaListener(OrderService orderService) {
         this.orderService = orderService;
     }
 
@@ -66,40 +63,36 @@ public class KafkaService {
         }
     }
 
-    @KafkaListener(topics = "ORDER_ACCEPTED", groupId = "order-manager")
+    @org.springframework.kafka.annotation.KafkaListener(topics = "ORDER_ACCEPTED", groupId = "order-manager")
     public void orderAccepted(@Payload OrderIdDTO order) {
         updateOrderStatus(order.getSystemOrderId(), OrderStatus.IN_PROGRESS);
     }
 
-    @KafkaListener(topics = "ORDER_READY", groupId = "order-manager")
+    @org.springframework.kafka.annotation.KafkaListener(topics = "ORDER_READY", groupId = "order-manager")
     public void orderReady(@Payload OrderIdDTO order) {
         updateOrderStatus(order.getSystemOrderId(), OrderStatus.READY);
     }
 
-    @KafkaListener(topics = "ORDER_PICKED_UP", groupId = "order-manager")
+    @org.springframework.kafka.annotation.KafkaListener(topics = "ORDER_PICKED_UP", groupId = "order-manager")
     public void orderPickedUp(@Payload OrderIdDTO order) {
         updateOrderStatus(order.getSystemOrderId(), OrderStatus.PICKED_UP);
     }
 
-    @KafkaListener(topics = "ORDER_DELIVERED", groupId = "order-manager")
+    @org.springframework.kafka.annotation.KafkaListener(topics = "ORDER_DELIVERED", groupId = "order-manager")
     public void orderDelivered(@Payload OrderIdDTO order) {
         updateOrderStatus(order.getSystemOrderId(), OrderStatus.COMPLETED);
         CamundaOrderTask task = taskService.getTaskById(order.getSystemOrderId());
         completeCamundaTask(task);
     }
 
-    @KafkaListener(topics = "ORDER_CANCELED", groupId = "order-manager")
+    @org.springframework.kafka.annotation.KafkaListener(topics = "ORDER_CANCELED", groupId = "order-manager")
     @KafkaHandler
     public void orderCancelled(@Payload OrderCancelled orderCancelled) {
         OrderDTO result = updateOrderStatus(orderCancelled.getSystemOrderId(), OrderStatus.CANCELED);
         cancelCamundaProcess(result.getProcessId());
     }
 
-    public void newOrderPlaced(OrderDTO order) {
-        NewOrder newOrder = new NewOrder(order);
-        kafkaTemplate.send("NEW_ORDER_PLACED", newOrder);
-        log.info("Published new topic: NEW_ORDER_PLACED");
-    }
+
 
     public void cancelCamundaProcess(String instanceId) {
         try{
