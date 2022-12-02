@@ -54,7 +54,11 @@ public class Order {
     @Column(name = "processId")
     private String processId;
 
-    public Order(int id, int customerId, int restaurantId, Timestamp createdAt, OrderStatus status, List<OrderItem> items, double orderPrice, double deliveryPrice, boolean withDelivery, int courierId, String processId) {
+    public Order(int id, int customerId, int restaurantId,
+                 Timestamp createdAt, OrderStatus status,
+                 List<OrderItem> items, double orderPrice,
+                 double deliveryPrice, boolean withDelivery,
+                 int courierId, String processId) {
         this.id = id;
         this.customerId = customerId;
         this.restaurantId = restaurantId;
@@ -82,5 +86,4 @@ public class Order {
         }
         return order;
     }
-
 }

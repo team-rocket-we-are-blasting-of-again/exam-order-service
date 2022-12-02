@@ -1,4 +1,4 @@
-package com.teamrocket.orderservice.handlers;
+package com.teamrocket.orderservice.application.handlers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
