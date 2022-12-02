@@ -1,4 +1,4 @@
-package com.teamrocket.orderservice.handlers;
+package com.teamrocket.orderservice.application.handlers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -6,6 +6,7 @@ import com.teamrocket.orderservice.application.KafkaService;
 import com.teamrocket.orderservice.model.dto.OrderDTO;
 import com.teamrocket.orderservice.model.entity.CamundaOrderTask;
 import com.teamrocket.orderservice.repository.TaskRepository;
+import com.teamrocket.orderservice.service.TaskService;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.client.spring.annotation.ExternalTaskSubscription;
 import org.camunda.bpm.client.task.ExternalTask;
@@ -20,14 +21,16 @@ import org.springframework.stereotype.Component;
 public class OrderCompleteHandler implements ExternalTaskHandler {
 
     @Autowired
-    TaskRepository taskRepository;
+    TaskService taskService;
 
     @Autowired
     KafkaService kafkaService;
 
+    @Autowired
+    Gson gson;
+
     @Override
     public void execute(ExternalTask externalTask, ExternalTaskService externalTaskService) {
-        Gson gson = new GsonBuilder().create();
         String processId = externalTask.getProcessInstanceId();
         String taskDefinitionKey = externalTask.getActivityId();
         String taskId = externalTask.getId();
@@ -35,7 +38,6 @@ public class OrderCompleteHandler implements ExternalTaskHandler {
 
         int systemOrderId = gson.fromJson(externalTask.getVariableTyped("systemOrderId").getValue().toString(), Integer.class);
         CamundaOrderTask task = new CamundaOrderTask(systemOrderId, processId, taskDefinitionKey, taskId, workerId);
-
-        taskRepository.save(task);
+        taskService.createTask(task);
     }
 }

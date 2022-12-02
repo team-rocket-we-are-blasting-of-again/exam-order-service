@@ -9,6 +9,7 @@ import com.teamrocket.orderservice.model.dto.TaskVariables;
 import com.teamrocket.orderservice.model.entity.CamundaOrderTask;
 import com.teamrocket.orderservice.repository.TaskRepository;
 import com.teamrocket.orderservice.service.OrderService;
+import com.teamrocket.orderservice.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.variable.Variables;
@@ -35,15 +36,18 @@ public class KafkaService {
     @Value("${camunda.server.engine}")
     private String restEngine;
 
+
+    @Autowired
     private RestTemplate restTemplate;
 
     @Autowired
     private OrderService orderService;
 
     @Autowired
-    private TaskRepository taskRepository;
+    private TaskService taskService;
 
-    private Gson GSON = new Gson();
+    @Autowired
+    private Gson GSON;
 
     public KafkaService(OrderService orderService) {
         this.orderService = orderService;
@@ -80,7 +84,7 @@ public class KafkaService {
     @KafkaListener(topics = "ORDER_DELIVERED", groupId = "order-manager")
     public void orderDelivered(@Payload OrderIdDTO order) {
         updateOrderStatus(order.getSystemOrderId(), OrderStatus.COMPLETED);
-        CamundaOrderTask task = taskRepository.getById(order.getSystemOrderId());
+        CamundaOrderTask task = taskService.getTaskById(order.getSystemOrderId());
         completeCamundaTask(task);
     }
 
@@ -92,7 +96,6 @@ public class KafkaService {
     }
 
     public void cancelCamundaProcess(String instanceId) {
-        restTemplate = new RestTemplate();
         try{
             String endProcessURL = new StringBuilder(restEngine)
                     .append("process-instance/")
@@ -106,7 +109,6 @@ public class KafkaService {
     }
 
     public void completeCamundaTask(CamundaOrderTask task) {
-        restTemplate = new RestTemplate();
         try {
             String url = new StringBuilder(restEngine)
                     .append("external-task/")
@@ -116,7 +118,6 @@ public class KafkaService {
 
             String requestBody = buildTaskVariables(task.getWorkerId());
 
-            log.info("FIRE TASK URL: {}", url);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             List<MediaType> mediaTypeList = new ArrayList();
@@ -126,7 +127,7 @@ public class KafkaService {
                     new HttpEntity<>(requestBody, headers);
 
             restTemplate.postForEntity(url, request, String.class);
-            log.info("completeCamundaTask with variables: {}", requestBody);
+            log.info("Completed order task with variables: {}", requestBody);
 
         } catch (Exception e) {
             log.error(e.getMessage());
