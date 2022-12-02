@@ -1,11 +1,8 @@
 package com.teamrocket.orderservice.application;
 
 import com.google.gson.Gson;
-import com.teamrocket.orderservice.model.dto.OrderCancelled;
-import com.teamrocket.orderservice.model.dto.OrderDTO;
+import com.teamrocket.orderservice.model.dto.*;
 import com.teamrocket.orderservice.enums.OrderStatus;
-import com.teamrocket.orderservice.model.dto.OrderIdDTO;
-import com.teamrocket.orderservice.model.dto.TaskVariables;
 import com.teamrocket.orderservice.model.entity.CamundaOrderTask;
 import com.teamrocket.orderservice.repository.TaskRepository;
 import com.teamrocket.orderservice.service.OrderService;
@@ -45,6 +42,9 @@ public class KafkaService {
 
     @Autowired
     private TaskService taskService;
+
+    @Autowired
+    private KafkaTemplate kafkaTemplate;
 
     @Autowired
     private Gson GSON;
@@ -93,6 +93,12 @@ public class KafkaService {
     public void orderCancelled(@Payload OrderCancelled orderCancelled) {
         OrderDTO result = updateOrderStatus(orderCancelled.getSystemOrderId(), OrderStatus.CANCELED);
         cancelCamundaProcess(result.getProcessId());
+    }
+
+    public void newOrderPlaced(OrderDTO order) {
+        NewOrder newOrder = new NewOrder(order);
+        kafkaTemplate.send("NEW_ORDER_PLACED", newOrder);
+        log.info("Published new topic: NEW_ORDER_PLACED");
     }
 
     public void cancelCamundaProcess(String instanceId) {

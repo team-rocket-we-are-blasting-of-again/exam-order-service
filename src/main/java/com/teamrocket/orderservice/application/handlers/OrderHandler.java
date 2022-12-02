@@ -2,6 +2,7 @@ package com.teamrocket.orderservice.application.handlers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.teamrocket.orderservice.application.KafkaService;
 import com.teamrocket.orderservice.model.dto.NewOrder;
 import com.teamrocket.orderservice.model.dto.NewOrderDTO;
 import com.teamrocket.orderservice.model.dto.OrderDTO;
@@ -27,7 +28,7 @@ public class OrderHandler implements ExternalTaskHandler {
     OrderRepository orderRepository;
 
     @Autowired
-    private KafkaTemplate kafkaTemplate;
+    private KafkaService kafkaService;
 
     @Override
     public void execute(ExternalTask externalTask, ExternalTaskService externalTaskService) {
@@ -38,17 +39,13 @@ public class OrderHandler implements ExternalTaskHandler {
         OrderDTO orderToCreate = new OrderDTO(newOrder);
         orderToCreate.setProcessId(externalTask.getProcessInstanceId());
         OrderDTO orderCreated = orderService.saveOrder(orderToCreate);
-        newOrderPlaced(orderCreated);
+        kafkaService.newOrderPlaced(orderCreated);
         Map<String, Object> allVariables = externalTask.getAllVariables();
         allVariables.put("order", gson.toJson(orderCreated));
         externalTaskService.complete(externalTask, allVariables);
     }
 
-    public void newOrderPlaced(OrderDTO order) {
-        NewOrder newOrder = new NewOrder(order);
-        kafkaTemplate.send("NEW_ORDER_PLACED", newOrder);
-        log.info("Published new topic: NEW_ORDER_PLACED");
-    }
+
 
 
 }
