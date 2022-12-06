@@ -45,11 +45,7 @@ public class OrderHandler implements ExternalTaskHandler {
     }
 
     public void newOrderPlaced(OrderDTO order) {
-        System.out.println(order.getRestaurantId());
-        System.out.println(order.getCustomerId());
-        System.out.println(order.getItems().size());
         NewOrder newOrder = new NewOrder(order);
-        System.out.println(newOrder.toString());
         kafkaTemplate.send("NEW_ORDER_PLACED", newOrder);
         log.info("Published new topic: NEW_ORDER_PLACED");
     }
