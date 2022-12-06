@@ -56,6 +56,7 @@ public class KafkaConsumerConfig {
         mappings.put("order", OrderIdDTO.class);
         mappings.put("neworder", NewOrder.class);
         mappings.put("neworderitem", NewOrderItem.class);
+        mappings.put("orderkafkamsg", OrderIdDTO.class);
         typeMapper.setIdClassMapping(mappings);
         converter.setTypeMapper(typeMapper);
         return converter;
