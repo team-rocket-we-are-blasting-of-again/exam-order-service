@@ -1,5 +1,7 @@
 package com.teamrocket.orderservice.config;
 
+import com.teamrocket.orderservice.model.dto.NewOrder;
+import com.teamrocket.orderservice.model.dto.NewOrderItem;
 import com.teamrocket.orderservice.model.dto.OrderCancelled;
 import com.teamrocket.orderservice.model.dto.OrderIdDTO;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +38,7 @@ public class KafkaConsumerConfig {
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-        props.put(JsonDeserializer.TRUSTED_PACKAGES, "com.teamrocket.model");
+        props.put(JsonDeserializer.TRUSTED_PACKAGES, "com.teamrocket.orderservice.model.dto");
         props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false); //for allowing acknowledgment
 
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "order-manager");
@@ -48,10 +50,12 @@ public class KafkaConsumerConfig {
         StringJsonMessageConverter converter = new StringJsonMessageConverter();
         DefaultJackson2JavaTypeMapper typeMapper = new DefaultJackson2JavaTypeMapper();
         typeMapper.setTypePrecedence(Jackson2JavaTypeMapper.TypePrecedence.TYPE_ID);
-        typeMapper.addTrustedPackages("com.baeldung.spring.kafka");
+        typeMapper.addTrustedPackages("com.teamrocket.orderservice.model.dto");
         Map<String, Class<?>> mappings = new HashMap<>();
-        mappings.put("orderCancelled", OrderCancelled.class);
+        mappings.put("ordercancelled", OrderCancelled.class);
         mappings.put("order", OrderIdDTO.class);
+        mappings.put("neworder", NewOrder.class);
+        mappings.put("neworderitem", NewOrderItem.class);
         typeMapper.setIdClassMapping(mappings);
         converter.setTypeMapper(typeMapper);
         return converter;
