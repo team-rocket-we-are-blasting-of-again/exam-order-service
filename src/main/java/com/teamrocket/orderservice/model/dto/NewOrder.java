@@ -32,4 +32,18 @@ public class NewOrder {
         this.withDelivery = order.isWithDelivery();
         this.items = NewOrderItem.fromItemDTOList(order.getItems());
     }
+
+    @Override
+    public String toString() {
+        return "NewOrder{" +
+                "id=" + id +
+                ", restaurantId=" + restaurantId +
+                ", customerId=" + customerId +
+                ", createdAt=" + createdAt +
+                ", status=" + status +
+                ", withDelivery=" + withDelivery +
+                ", totalPrice=" + totalPrice +
+                ", items=" + items +
+                '}';
+    }
 }
