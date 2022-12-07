@@ -98,27 +98,4 @@ public class Order {
         return order;
     }
 
-    public Integer getId() {
-        return nonNull(this.legacyId) ?
-            this.legacyId :
-            this.id;
-    }
-
-    public Integer getCustomerId() {
-        return nonNull(this.customerId) ?
-            this.customerId :
-            this.legacyCustomerId;
-    }
-
-    public Integer getRestaurantId() {
-        return nonNull(this.restaurantId) ?
-            this.restaurantId :
-            this.legacyRestaurantId;
-    }
-
-    public Integer getCourierId() {
-        return nonNull(this.courierId) ?
-            this.courierId :
-            this.legacyCourierId;
-    }
 }

@@ -21,7 +21,10 @@ public class OrderItem {
     private int id;
 
     @Column(name = "menuItemId")
-    private int menuItemId;
+    private Integer menuItemId;
+
+    @Column(name = "legacyMenuItemId")
+    private int legacyMenuItemId;
 
     @Column(name = "name")
     private String name;
@@ -35,6 +38,9 @@ public class OrderItem {
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
+
+    @Column(name = "legacyOrderId")
+    private Integer legacyOrderId;
 
     public OrderItem(String name, double price, int amount) {
         this.name = name;
