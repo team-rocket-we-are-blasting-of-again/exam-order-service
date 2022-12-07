@@ -73,7 +73,7 @@ public class Order {
     @Column(name = "courierId")
     private Integer courierId;
 
-    @Column(name = "courierId")
+    @Column(name = "legacyCourierId")
     private Integer legacyCourierId;
 
     @Column(name = "processId")
