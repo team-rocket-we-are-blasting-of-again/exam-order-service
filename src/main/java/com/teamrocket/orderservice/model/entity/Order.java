@@ -39,6 +39,9 @@ public class Order {
     @Column(name = "id", nullable = false)
     private int id;
 
+    @Column(name = "legacyId")
+    private Integer legacyId;
+
     @Column(name = "customerId")
     private Integer customerId;
 
@@ -93,6 +96,12 @@ public class Order {
             item.setOrder(order);
         }
         return order;
+    }
+
+    public Integer getId() {
+        return nonNull(this.legacyId) ?
+            this.legacyId :
+            this.id;
     }
 
     public Integer getCustomerId() {
