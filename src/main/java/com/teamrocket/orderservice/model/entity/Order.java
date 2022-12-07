@@ -39,7 +39,7 @@ public class Order {
     @Column(name = "id", nullable = false)
     private int id;
 
-    @Column(name = "legacyId")
+    @Column(name = "legacyId", unique = true)
     private Integer legacyId;
 
     @Column(name = "customerId")
