@@ -1,32 +1,41 @@
 package com.teamrocket.orderservice.model.entity;
 
 import com.teamrocket.orderservice.model.dto.OrderItemDTO;
-import lombok.*;
-
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Table(
-    name = "order_item",
-    uniqueConstraints = {
-        @UniqueConstraint(
-            name = "UniqueOrderItem",
-            columnNames = { "menuItemId", "order_id" }
-        ),
-        @UniqueConstraint(
-            name = "UniqueLegacyOrderItem",
-            columnNames = { "legacyMenuItemId", "legacyOrderId" }
-        )
-    }
-)
+@Table(name = "order_item", uniqueConstraints = {
+    @UniqueConstraint(
+        name = "UniqueOrderItem",
+        columnNames = {"menuItemId", "order_id"}
+    ),
+    @UniqueConstraint(
+        name = "UniqueLegacyOrderItem",
+        columnNames = {"legacyMenuItemId", "legacyOrderId"}
+    )
+})
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
 public class OrderItem {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -59,6 +68,7 @@ public class OrderItem {
         this.price = price;
         this.amount = amount;
     }
+
     public OrderItem(String name, double price, int amount, Order order) {
         this.order = order;
         this.name = name;
@@ -80,11 +90,11 @@ public class OrderItem {
     @Override
     public String toString() {
         return "OrderItem{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", amount=" + amount +
-                ", order=" + order +
-                '}';
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", price=" + price +
+            ", amount=" + amount +
+            ", order=" + order +
+            '}';
     }
 }
