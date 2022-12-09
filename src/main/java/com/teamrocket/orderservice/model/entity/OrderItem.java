@@ -8,7 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "order_item")
+@Table(
+    name = "order_item",
+    uniqueConstraints = {
+        @UniqueConstraint(
+            name = "UniqueOrderItem",
+            columnNames = { "menuItemId", "order_id" }
+        ),
+        @UniqueConstraint(
+            name = "UniqueLegacyOrderItem",
+            columnNames = { "legacyMenuItemId", "legacyOrderId" }
+        )
+    }
+)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -21,7 +33,10 @@ public class OrderItem {
     private int id;
 
     @Column(name = "menuItemId")
-    private int menuItemId;
+    private Integer menuItemId;
+
+    @Column(name = "legacyMenuItemId")
+    private int legacyMenuItemId;
 
     @Column(name = "name")
     private String name;
@@ -35,6 +50,9 @@ public class OrderItem {
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
+
+    @Column(name = "legacyOrderId")
+    private Integer legacyOrderId;
 
     public OrderItem(String name, double price, int amount) {
         this.name = name;
