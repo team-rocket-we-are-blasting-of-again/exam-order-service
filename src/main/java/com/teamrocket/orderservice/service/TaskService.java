@@ -21,7 +21,7 @@ public class TaskService {
     }
 
     public CamundaOrderTask getTaskById(int systemOrderId) {
-        CamundaOrderTask storedTask = taskRepository.getById(systemOrderId);
+        CamundaOrderTask storedTask = taskRepository.findById(systemOrderId).orElseThrow();
         return storedTask;
     }
 }
