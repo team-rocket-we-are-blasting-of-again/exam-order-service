@@ -21,6 +21,7 @@ public class CamundaOrderTask {
 
     @Id
     private int systemOrderId;
+    
     private String processId;
     private String taskDefinitionKey;
     private String taskId;
