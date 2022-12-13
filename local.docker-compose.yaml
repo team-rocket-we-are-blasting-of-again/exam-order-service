@@ -1,19 +1,11 @@
 version: "3.9"
 
 services:
-  rabbitmq:
-    container_name: rabbitmq
-    image: rabbitmq:3-alpine
-    ports:
-      - "15672:15672"
-      - "5672:5672"
-    networks:
-      orders:
   postgres:
-    container_name: postgres
+    container_name: postgres_orders
     image: postgres:latest
     ports:
-      - "5432:5432"
+      - "5445:5445"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
