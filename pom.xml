@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.teamrocket</groupId>
     <artifactId>Order_mService</artifactId>
-    <version>1.0.0-RELEASE</version>
+    <version>1.0.1-RELEASE</version>
     <name>Order_mService</name>
     <description>Order_microservice</description>
     <properties>
