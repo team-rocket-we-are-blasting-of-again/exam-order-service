@@ -1,8 +1,11 @@
 package com.teamrocket.orderservice.application;
 
 import com.google.gson.Gson;
-import com.teamrocket.orderservice.model.dto.*;
 import com.teamrocket.orderservice.enums.OrderStatus;
+import com.teamrocket.orderservice.model.dto.OrderCancelled;
+import com.teamrocket.orderservice.model.dto.OrderDTO;
+import com.teamrocket.orderservice.model.dto.OrderIdDTO;
+import com.teamrocket.orderservice.model.dto.TaskVariables;
 import com.teamrocket.orderservice.model.entity.CamundaOrderTask;
 import com.teamrocket.orderservice.service.OrderService;
 import com.teamrocket.orderservice.service.TaskService;
@@ -56,7 +59,7 @@ public class KafkaListener {
             result = orderService.updateOrderStatus(id, status);
             log.info("Order " + result.getId() + " changed status: " + status.toString());
             return result;
-        } catch(Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage());
             //TODO: Discuss whether order should be cancelled in this case or not
             return null;
@@ -88,21 +91,24 @@ public class KafkaListener {
     @org.springframework.kafka.annotation.KafkaListener(topics = "ORDER_CANCELED", groupId = "order-manager")
     @KafkaHandler
     public void orderCancelled(@Payload OrderCancelled orderCancelled) {
+
         OrderDTO result = updateOrderStatus(orderCancelled.getSystemOrderId(), OrderStatus.CANCELED);
-        cancelCamundaProcess(result.getProcessId());
+        if (orderCancelled.getReason().equals("Unexpected error")) {
+            cancelCamundaProcess(result.getProcessId());
+
+        }
     }
 
 
-
     public void cancelCamundaProcess(String instanceId) {
-        try{
+        try {
             String endProcessURL = new StringBuilder(restEngine)
                     .append("process-instance/")
                     .append(instanceId)
                     .toString();
             restTemplate.delete(endProcessURL);
             log.info("Process instance " + instanceId + " was cancelled");
-        } catch(Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage());
         }
     }
